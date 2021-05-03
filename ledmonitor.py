@@ -23,19 +23,17 @@ while True:
         col = addresses[adr]
         x = ping(adr, count=1, size=992)
         if x.success() == True:
-            led_color_on(col)
+            led_color(col, True)
             sleep(5)
             break
         else:
             if ++fail_cnt > 3:
-                led_color_set("red")
+                led_color("red", True)
                 sleep(5)
                 fail = 0
             else:
                 # Let's have a blink spasm
                 led_color_blink(col, 5, 0.2)
-
-main()
 
 
 
