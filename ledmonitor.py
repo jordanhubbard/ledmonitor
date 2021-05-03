@@ -8,14 +8,15 @@ from time import sleep
 from pythonping import ping
 from ledcontrol import *
 
-addresses = dict([
-    ("8.8.8.8", "green"),		# Google
-    ("10.11.100.248", "yellow"),	# Near radio P2P
-    ("10.11.100.249", "yellow"),	# Far radio P2P
-    ("10.11.111.250", "cyan"),		# Far switch
-    ("10.11.111.248", "violet"),	# Near ISP radio
-    ("10.11.111.249", "violet"),	# Far ISP radio
-    ("10.11.100.254", "red")])		# Great Firewall
+addresses = {
+    "8.8.8.8": 		"green",	# Google
+    "10.11.100.248":	"yellow",	# Near radio P2P
+    "10.11.100.249":	"yellow",	# Far radio P2P
+    "10.11.111.250":	"cyan",		# Far switch
+    "10.11.111.248":	"violet",	# Near ISP radio
+    "10.11.111.249":	"violet",	# Far ISP radio
+    "10.11.100.254":	"red",		# Great Firewall
+}
     
 while True:
     fail_cnt = 0

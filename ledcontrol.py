@@ -2,10 +2,11 @@ from gpiozero import LED
 from time import sleep
 
 # tri-color LED is hooked to GPIO pins 17, 27 and 22
-_led_ports = dict([
-    ("red", 17),
-    ("green", 27),
-    ("blue", 22)])
+_led_ports = {
+    "red":	17,
+    "green":	27,
+    "blue":	22,
+}
 
 # Obviously, with RGB LED any color combination is possible with color blending
 # but I don't feel like doing that and I already have more primary/secondary
@@ -45,15 +46,16 @@ def led_all(state):
     led_blue(state)
     led_green(state)
         
-led_functions = dict(
-    black=	( led_all,	True ),
-    red=	( led_red,	True ),
-    green=	( led_green,	True ),
-    blue=	( led_blue,	True ),
-    cyan=	( led_cyan,	True ),
-    yellow=	( led_yellow,	True ),
-    violet=	( led_violet,	True ),
-    white=	( led_all,	False ))
+led_functions = {
+    "black":	( led_all,	True ),
+    "red":	( led_red,	True ),
+    "green":	( led_green,	True ),
+    "blue":	( led_blue,	True ),
+    "cyan":	( led_cyan,	True ),
+    "yellow":	( led_yellow,	True ),
+    "violet":	( led_violet,	True ),
+    "white":	( led_all,	False ),
+}
 
 def led_colors():
     l = []
