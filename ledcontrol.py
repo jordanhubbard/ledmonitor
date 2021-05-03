@@ -45,26 +45,25 @@ def led_all(state):
     led_blue(state)
     led_green(state)
         
-led_functions = dict([
-        ("black",	led_all,	True),
-        ("red",		led_red,	True),
-        ("green",	led_green,	True),
-        ("blue",	led_blue,	True),
-        ("cyan",	led_cyan,	True),
-        ("yellow",	led_yellow,	True),
-        ("violet",	led_violet,	True),
-        ("white",	led_all,	False)])
+led_functions = dict(
+    black=	( led_all,	True ),
+    red=	( led_red,	True ),
+    green=	( led_green,	True ),
+    blue=	( led_blue,	True ),
+    cyan=	( led_cyan,	True ),
+    yellow=	( led_yellow,	True ),
+    violet=	( led_violet,	True ),
+    white=	( led_all,	False ))
 
 def led_colors():
-    fns = led_functions
     l = []
-    for fn in fns:
-        l.append(fn[0])
+    for fn in led_functions:
+        l.append(fn)
     return l
 
 def led_color(color, state):
     t = led_functions[color]
-    t[1](t[2])
+    t[0](t[1])
 
 def led_color_blink(col, count, interval):
     for r in range(count):
