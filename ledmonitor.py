@@ -1,5 +1,5 @@
 #!/bin/python3
-#
+
 # This is the primary script to run which basically loops forever and display
 # the network status based on pinging some known addresses on the tri-color
 # status LED wired to some GPIO pins.
@@ -34,7 +34,3 @@ while True:
             else:
                 # Let's have a blink spasm
                 led_color_blink(col, 5, 0.2)
-
-
-
-    
