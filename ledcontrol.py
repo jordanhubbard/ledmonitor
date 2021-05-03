@@ -8,8 +8,8 @@ _led_ports = dict([
     ("blue", 22)])
 
 # Obviously, with RGB LED any color combination is possible with color blending
-# but I don't feel like doing that and I already have more primary/secondary colors
-# than I need!
+# but I don't feel like doing that and I already have more primary/secondary
+# colors than I need!
 def led_red(state):
     if state == True:
         LED(_led_ports["red"]).on()
@@ -29,7 +29,7 @@ def led_blue(state):
         LED(_led_ports["blue"]).off()
 
 def led_cyan(state):
-    blue_led(state)
+    led_blue(state)
     led_green(state)
 
 def led_yellow(state):
