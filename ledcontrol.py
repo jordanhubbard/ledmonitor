@@ -8,26 +8,32 @@ _led_ports = {
     "blue":	22,
 }
 
+_led_functions = {
+    "red":	led_red,
+    "green":	led_green,
+    "blue":	led_blue,
+    "cyan":	led_cyan,
+    "yellow":	led_yellow,
+    "violet":	led_violet,
+    "white":	led_all,
+}
+
 # Obviously, with RGB LED any color combination is possible with color blending
 # but I don't feel like doing that and I already have more primary/secondary
 # colors than I need!
+
+def _led_color(color, state):
+    l = LED(_led_ports[color])
+    l.on() if state == True else l.off()
+
 def led_red(state):
-    if state == True:
-        LED(_led_ports["red"]).on()
-    else:
-        LED(_led_ports["red"]).off()
+    _led_color("red", state)
 
 def led_green(state):
-    if state == True:
-        LED(_led_ports["green"]).on()
-    else:
-        LED(_led_ports["green"]).off()
+    _led_color("green", state)
 
 def led_blue(state):
-    if state == True:
-        LED(_led_ports["blue"]).on()
-    else:
-        LED(_led_ports["blue"]).off()
+    _led_color("blue", state)
 
 def led_cyan(state):
     led_blue(state)
@@ -46,26 +52,14 @@ def led_all(state):
     led_blue(state)
     led_green(state)
         
-led_functions = {
-    "black":	( led_all,	True ),
-    "red":	( led_red,	True ),
-    "green":	( led_green,	True ),
-    "blue":	( led_blue,	True ),
-    "cyan":	( led_cyan,	True ),
-    "yellow":	( led_yellow,	True ),
-    "violet":	( led_violet,	True ),
-    "white":	( led_all,	False ),
-}
-
 def led_colors():
     l = []
-    for fn in led_functions:
+    for fn in _led_functions:
         l.append(fn)
     return l
 
 def led_color(color, state):
-    t = led_functions[color]
-    t[0](t[1])
+    _led_functions[color](state)
 
 def led_color_blink(col, count, interval):
     for r in range(count):
