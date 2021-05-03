@@ -64,7 +64,7 @@ def led_colors():
     return l
 
 def led_color(color, state):
-    t = led_functions()["color"]
+    t = led_functions()[color]
     t[1](t[2])
 
 def led_color_blink(col, count, interval):
