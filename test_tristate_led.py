@@ -7,7 +7,7 @@ def test_leds(sleep_interval):
         for col in colors:
             led_all(False)
             print(col + " LED is ON")
-            led_color_on(col)
+            led_color(col, True)
             sleep(sleep_interval)
 
 led_color_blink("red", 5, 0.2)

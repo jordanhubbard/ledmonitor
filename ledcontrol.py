@@ -57,14 +57,15 @@ def led_functions():
         ("white",	led_all,	False)])
 
 def led_colors():
-    fns = led_functions
+    fns = led_functions()
     l = []
     for fn in fns:
-        l.append(fn)
+        l.append(fn[0])
     return l
 
 def led_color(color, state):
-    led_functions()[color][1](state)
+    t = led_functions()["color"]
+    t[1](t[2])
 
 def led_color_blink(col, count, interval):
     for r in range(count):
