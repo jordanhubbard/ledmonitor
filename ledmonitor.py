@@ -7,6 +7,7 @@
 from time import sleep
 from pythonping import ping
 from ledcontrol import *
+import sys
 
 addresses = {
     "8.8.8.8": 		"green",	# Google
@@ -35,6 +36,11 @@ while True:
                 else:
                     # Let's have a blink spasm
                     led_color_blink(col, 5, 0.2)
+
+        except PermissionError:
+            print("You have to run this as root")
+            sys.exit(1)
+
         except:
             # Usually means the network has violently disconnected
             led_color_blink("red", 5, 0.2)
