@@ -1,13 +1,11 @@
 from gpiozero import LED
 from time import sleep
 
-# tri-color LED is hooked to GPIO pins 17, 27 and 22
-def _led_ports():
-    return {
-        "red":		17,
-        "green":	27,
-        "blue":		22,
-    }
+# tri-color LED is hooked to GPIO pins 17, 27 and 22.  These need to be statically allocated at this level
+# rather than looking them up in a table due to the way GPIO allocates pins *once*.
+_red_led = LED(17)
+_green_led = LED(27)
+_blue_led = LED(22)
 
 def _led_functions():
     return {
@@ -23,36 +21,41 @@ def _led_functions():
 # Obviously, with RGB LED any color combination is possible with color blending
 # but I don't feel like doing that and I already have more primary/secondary
 # colors than I need!
+def _led_color(color, value):
+    if color == "red":
+        _red_led.on() if value == True else _red_led.off()
+    elif color == "green":
+        _green_led.on() if value == True else _green_led.off()
+    elif color == "blue":
+        _blue_led.on() if value == True else _blue_led.off()
+    else:
+        raise ValueError("Invalid color name" + color)
 
-def _led_color(color, state):
-    l = LED(_led_ports()[color])
-    l.on() if state == True else l.off()
+def led_red(value):
+    _led_color("red", value)
 
-def led_red(state):
-    _led_color("red", state)
+def led_green(value):
+    _led_color("green", value)
 
-def led_green(state):
-    _led_color("green", state)
+def led_blue(value):
+    _led_color("blue", value)
 
-def led_blue(state):
-    _led_color("blue", state)
+def led_cyan(value):
+    led_blue(value)
+    led_green(value)
 
-def led_cyan(state):
-    led_blue(state)
-    led_green(state)
+def led_yellow(value):
+    led_red(value)
+    led_green(value)
 
-def led_yellow(state):
-    led_red(state)
-    led_green(state)
+def led_violet(value):
+    led_red(value)
+    led_blue(value)
 
-def led_violet(state):
-    led_red(state)
-    led_blue(state)
-
-def led_all(state):
-    led_red(state)
-    led_blue(state)
-    led_green(state)
+def led_all(value):
+    led_red(value)
+    led_blue(value)
+    led_green(value)
         
 def led_colors():
     l = []
@@ -60,15 +63,14 @@ def led_colors():
         l.append(fn)
     return l
 
-def led_color(color, state):
-    _led_functions()[color](state)
+def led_color(color, value):
+    _led_functions()[color](value)
 
 def led_color_blink(col, count, interval):
-    for r in range(count):
+    i = 0
+    while i < count:
         led_color(col, True)
-        sleep(interval)
+        sleep(0.2)
         led_color(col, False)
-
-
-
-    
+        sleep(interval)
+        i = i + 1
