@@ -22,16 +22,19 @@ while True:
     fail_cnt = 0
     for adr in addresses:
         col = addresses[adr]
-        x = ping(adr, count=1, size=992)
-        if x.success() == True:
-            led_color(col, True)
-            sleep(5)
-            break
-        else:
-            if ++fail_cnt > 3:
-                led_color("red", True)
+        try:
+            x = ping(adr, count=1, size=992)
+            if x.success() == True:
+                led_color(col, True)
                 sleep(5)
-                fail = 0
             else:
-                # Let's have a blink spasm
-                led_color_blink(col, 5, 0.2)
+                if ++fail_cnt > 3:
+                    led_color("red", True)
+                    sleep(2)
+                    fail = 0
+                else:
+                    # Let's have a blink spasm
+                    led_color_blink(col, 5, 0.2)
+        except:
+            # Usually means the network has violently disconnected
+            led_color_blink("red", 5, 0.2)
