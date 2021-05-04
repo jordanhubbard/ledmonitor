@@ -28,6 +28,7 @@ while True:
             if x.success() == True:
                 led_color(col, True)
                 sleep(5)
+		break
             else:
                 if ++fail_cnt > 3:
                     led_color("red", True)
