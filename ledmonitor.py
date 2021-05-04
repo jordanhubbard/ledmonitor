@@ -7,7 +7,9 @@
 from time import sleep
 from pythonping import ping
 from ledcontrol import *
+from datetime import date
 import sys
+import logging
 
 addresses = {
     "8.8.8.8": 		"green",	# Google
@@ -18,7 +20,13 @@ addresses = {
     "10.11.111.249":	"violet",	# Far ISP radio
     "10.11.100.254":	"red",		# Great Firewall
 }
-    
+
+logging.basicConfig(filename='/tmp/ledmonitor.log', level=logging.DEBUG)
+def eep(msg):
+    today = date.today()
+    d = today.strftime("%Y/%m/%d %H:%M")
+    logging.warning(d + " " + msg)
+
 while True:
     fail_cnt = 0
     for adr in addresses:
@@ -32,11 +40,13 @@ while True:
             else:
                 if ++fail_cnt > 3:
                     led_color("red", True)
+                    eep("fail count > 3 for ip " + adr)
                     sleep(2)
                     fail = 0
                 else:
                     # Let's have a blink spasm
                     led_color_blink(col, 5, 0.2)
+                    eep("spazzing on ip " + adr + "with color " + col)
 
         except PermissionError:
             print("You have to run this as root")
@@ -45,3 +55,4 @@ while True:
         except:
             # Usually means the network has violently disconnected
             led_color_blink("red", 5, 0.2)
+            eep("exception path triggered on " + adr)
