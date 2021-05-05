@@ -7,7 +7,7 @@
 from time import sleep
 from pythonping import ping
 from ledcontrol import *
-from datetime import date
+from datetime import datetime
 import sys
 import logging
 
@@ -23,7 +23,7 @@ addresses = {
 
 logging.basicConfig(filename='/tmp/ledmonitor.log', level=logging.DEBUG)
 def eep(msg):
-    today = date.today()
+    today = datetime.now()
     d = today.strftime("%Y/%m/%d %R")
     logging.warning(d + " " + msg)
 
