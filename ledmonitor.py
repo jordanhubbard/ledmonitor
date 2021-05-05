@@ -24,7 +24,7 @@ addresses = {
 logging.basicConfig(filename='/tmp/ledmonitor.log', level=logging.DEBUG)
 def eep(msg):
     today = date.today()
-    d = today.strftime("%Y/%m/%d %H:%M")
+    d = today.strftime("%Y/%m/%d %R")
     logging.warning(d + " " + msg)
 
 while True:
@@ -46,7 +46,7 @@ while True:
                 else:
                     # Let's have a blink spasm
                     led_color_blink(col, 5, 0.2)
-                    eep("spazzing on ip " + adr + "with color " + col)
+                    eep("spazzing on ip " + adr + " with color " + col)
 
         except PermissionError:
             print("You have to run this as root")
