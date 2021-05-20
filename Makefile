@@ -13,7 +13,7 @@ test:
 	test_tristate_led.py
 
 run: install
-	systemctl start ledonitor
+	systemctl start ledmonitor
 
 clean:
 	rm -rf .idea build dist ledmonitor.spec
