@@ -7,7 +7,7 @@ Type=simple
 Restart=always
 RestartSec=1
 User=root
-ExecStart=/usr/bin/env python3 /usr/libexec/ledmonitor.py
+ExecStart=/usr/bin/env python3 /usr/libexec/ledmonitor/ledmonitor.py
 
 [Install]
 WantedBy=multi-user.target
