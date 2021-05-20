@@ -13,4 +13,4 @@ run: install
 	systemctl start ledonitor
 
 clean:
-	rm -rf build dist ledmonitor.spec
+	rm -rf .idea build dist ledmonitor.spec
