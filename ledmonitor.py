@@ -9,6 +9,7 @@ from pythonping import ping
 from ledcontrol import led_color, led_color_blink
 from datetime import datetime
 import sys
+import os
 import logging
 
 addresses = {
@@ -24,10 +25,14 @@ addresses = {
 logging.basicConfig(filename='/tmp/ledmonitor.log', level=logging.DEBUG)
 
 
-def eep(msg):
+def eep(msg, warn = True):
     today = datetime.now()
     d = today.strftime("%Y/%m/%d %R")
-    logging.warning(d + " " + msg)
+    str = d + " " + msg
+    if warn:
+       logging.warning(str)
+    else:
+       logging.error(str)
 
 
 while True:
@@ -53,9 +58,10 @@ while True:
 
         except PermissionError:
             print("You have to run this as root")
+	    eep("Attempt to run agent as non-root id " + os.getuid())
             sys.exit(1)
 
         except BaseException:
             # Usually means the network has violently disconnected
             led_color_blink("red", 5, 0.2)
-            eep("exception path triggered on " + adr)
+            eep("exception path triggered on " + adr, False)
