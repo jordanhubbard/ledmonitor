@@ -25,14 +25,14 @@ addresses = {
 logging.basicConfig(filename='/tmp/ledmonitor.log', level=logging.DEBUG)
 
 
-def eep(msg, warn = True):
+def eep(msg, warn=True):
     today = datetime.now()
     d = today.strftime("%Y/%m/%d %R")
     str = d + " " + msg
     if warn:
-       logging.warning(str)
+        logging.warning(str)
     else:
-       logging.error(str)
+        logging.error(str)
 
 
 while True:
@@ -58,7 +58,7 @@ while True:
 
         except PermissionError:
             print("You have to run this as root")
-	    eep("Attempt to run agent as non-root id " + os.getuid())
+            eep("Attempt to run agent as non-root id " + os.getuid())
             sys.exit(1)
 
         except BaseException:
