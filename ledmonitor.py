@@ -1,8 +1,10 @@
 #!/bin/python3
 
-# This is the primary script to run which basically loops forever and display
-# the network status based on pinging some known addresses on the tri-color
-# status LED wired to some GPIO pins.
+"""
+This is the primary script to run which basically loops forever and display
+the network status based on pinging some known addresses on the tri-color
+status LED wired to some GPIO pins.
+"""
 
 from time import sleep
 from pythonping import ping
@@ -13,19 +15,20 @@ import os
 import logging
 
 addresses = {
-    "8.8.8.8": 		    "green",    # Google
+    "8.8.8.8": 		"green",    # Google
     "10.11.100.248":	"yellow",   # Near radio P2P
     "10.11.100.249":	"yellow",   # Far radio P2P
-    "10.11.111.250":	"cyan",		# Far switch
+    "10.11.111.250":	"cyan",     # Far switch
     "10.11.111.248":	"violet",   # Near ISP radio
     "10.11.111.249":	"violet",   # Far ISP radio
-    "10.11.100.254":	"red",		# Great Firewall
+    "10.11.100.254":	"red",      # Great Firewall
 }
 
 logging.basicConfig(filename='/tmp/ledmonitor.log', level=logging.DEBUG)
 
 
 def eep(msg, warn=True):
+    """Scream about some important problem"""
     today = datetime.now()
     d = today.strftime("%Y/%m/%d %R")
     str = d + " " + msg

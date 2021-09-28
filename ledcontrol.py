@@ -1,3 +1,5 @@
+"""All LED control functions are in this module"""
+
 from time import sleep
 from gpiozero import LED
 
@@ -86,10 +88,10 @@ def led_all(value):
 
 def led_colors():
     """Return a list of all possible LED colors"""
-    lst = []
-    for fn in _led_functions():
-        lst.append(fn)
-    return lst
+    l = []
+    for f in _led_functions():
+        lst.append(f)
+    return l
 
 
 def led_color(color, value):
