@@ -30,17 +30,17 @@ logging.basicConfig(filename='/tmp/ledmonitor.log', level=logging.DEBUG)
 def eep(msg, warn=True):
     """Scream about some important problem"""
     today = datetime.now()
-    d = today.strftime("%Y/%m/%d %R")
-    str = d + " " + msg
+    date_str = today.strftime("%Y/%m/%d %R")
+    log_str = date_str + " " + msg
     if warn:
-        logging.warning(str)
+        logging.warning(log_str)
     else:
-        logging.error(str)
+        logging.error(log_str)
 
 
 while True:
-    fail_cnt = 0
-    for adr in addresses:
+    FAIL_CNT = 0
+    for adr in addresses.items():
         col = addresses[adr]
         try:
             x = ping(adr, count=1, size=992)
@@ -49,7 +49,7 @@ while True:
                 sleep(5)
                 break
             else:
-                if ++fail_cnt > 3:
+                if ++FAIL_CNT > 3:
                     led_color("red", True)
                     eep("fail count > 3 for ip " + adr)
                     sleep(2)

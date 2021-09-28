@@ -88,10 +88,10 @@ def led_all(value):
 
 def led_colors():
     """Return a list of all possible LED colors"""
-    l = []
-    for f in _led_functions():
-        lst.append(f)
-    return l
+    ret_list = []
+    for func_iter in _led_functions():
+        ret_list.append(func_iter)
+    return ret_list
 
 
 def led_color(color, value):
