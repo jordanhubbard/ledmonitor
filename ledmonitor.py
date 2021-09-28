@@ -6,13 +6,13 @@ the network status based on pinging some known addresses on the tri-color
 status LED wired to some GPIO pins.
 """
 
-from time import sleep
-from pythonping import ping
-from ledcontrol import led_color, led_color_blink
-from datetime import datetime
 import sys
 import os
 import logging
+from time import sleep
+from datetime import datetime
+from pythonping import ping
+from ledcontrol import led_color, led_color_blink
 
 addresses = {
     "8.8.8.8": 		"green",    # Google
@@ -48,16 +48,17 @@ while True:
                 led_color(col, True)
                 sleep(5)
                 break
+
+            FAIL_CNT = FAIL_CNT + 1
+            if FAIL_CNT > 3:
+                led_color("red", True)
+                eep("fail count > 3 for ip " + adr)
+                sleep(2)
+                FAIL_CNT = 0
             else:
-                if ++FAIL_CNT > 3:
-                    led_color("red", True)
-                    eep("fail count > 3 for ip " + adr)
-                    sleep(2)
-                    fail = 0
-                else:
-                    # Let's have a blink spasm
-                    led_color_blink(col, 5, 0.2)
-                    eep("spazzing on ip " + adr + " with color " + col)
+                # Let's have a blink spasm
+                led_color_blink(col, 5, 0.2)
+                eep("spazzing on ip " + adr + " with color " + col)
 
         except PermissionError:
             print("You have to run this as root")
