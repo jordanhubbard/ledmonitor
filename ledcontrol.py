@@ -1,5 +1,5 @@
-from gpiozero import LED
 from time import sleep
+from gpiozero import LED
 
 # tri-color LED is hooked to GPIO pins 17, 27 and 22.  These need to be
 # statically allocated at this level rather than looking them up in a table
@@ -45,39 +45,47 @@ def _led_color(color, value):
 
 
 def led_red(value):
+    """Power on/off the red LED based on value"""
     _led_color("red", value)
 
 
 def led_green(value):
+    """Power on/off the green LED based on value"""
     _led_color("green", value)
 
 
 def led_blue(value):
+    """Power on/off the blue LED based on value"""
     _led_color("blue", value)
 
 
 def led_cyan(value):
+    """Power on/off LED color of cyan, using a combination of blue and green"""
     led_blue(value)
     led_green(value)
 
 
 def led_yellow(value):
+    """Power on/off LED color of yellow, using a combination of red and green"""
     led_red(value)
     led_green(value)
 
 
 def led_violet(value):
+    """Power on/off LED color of violet, using a combination of red and blue"""
     led_red(value)
     led_blue(value)
 
 
 def led_all(value):
+    """Power on/off all LEDs (white or black)"""
     led_red(value)
     led_blue(value)
     led_green(value)
 
 
 def led_colors():
+    """Return a list of all possible LED colors"""
     lst = []
     for fn in _led_functions():
         lst.append(fn)
@@ -85,10 +93,12 @@ def led_colors():
 
 
 def led_color(color, value):
+    """Convenience function to set any color value on or off"""
     _led_functions()[color](value)
 
 
 def led_color_blink(col, count, interval):
+    """Blink a specific color count times using a delay interval"""
     i = 0
     while i < count:
         led_color(col, True)
