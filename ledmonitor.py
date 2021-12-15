@@ -41,7 +41,7 @@ def eep(msg, warn=True):
 while True:
     FAIL_CNT = 0
     for adr in addresses.items():
-        col = addresses[adr]
+        col = adr[1]
         try:
             x = ping(adr, count=1, size=992)
             if x.success():
