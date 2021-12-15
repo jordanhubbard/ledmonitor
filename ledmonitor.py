@@ -41,9 +41,10 @@ def eep(msg, warn=True):
 while True:
     FAIL_CNT = 0
     for adr in addresses.items():
+        ip = adr[0]
         col = adr[1]
         try:
-            x = ping(adr, count=1, size=992)
+            x = ping(ip, count=1, size=992)
             if x.success():
                 led_color(col, True)
                 sleep(5)
@@ -52,13 +53,13 @@ while True:
             FAIL_CNT = FAIL_CNT + 1
             if FAIL_CNT > 3:
                 led_color("red", True)
-                eep("fail count > 3 for ip " + adr)
+                eep("fail count > 3 for ip " + ip)
                 sleep(2)
                 FAIL_CNT = 0
             else:
                 # Let's have a blink spasm
                 led_color_blink(col, 5, 0.2)
-                eep("spazzing on ip " + adr + " with color " + col)
+                eep("spazzing on ip " + ip + " with color " + col)
 
         except PermissionError:
             print("You have to run this as root")
@@ -68,4 +69,4 @@ while True:
         except OSError:
             # Usually means the network has violently disconnected
             led_color_blink("red", 5, 0.2)
-            eep("exception path triggered on " + adr, False)
+            eep("exception path triggered on " + ip, False)
