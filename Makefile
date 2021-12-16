@@ -14,6 +14,7 @@ test:
 	test_tristate_led.py
 
 run: install
+	sudo systemctl enable ledmonitor
 	sudo systemctl start ledmonitor
 
 clean:
