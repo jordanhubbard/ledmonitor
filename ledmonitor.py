@@ -16,7 +16,7 @@ from ledcontrol import led_color, led_color_blink
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import time
 
-hostName = "localhost"
+hostName = "netled.local"
 serverPort = 8080
 
 addresses = {
