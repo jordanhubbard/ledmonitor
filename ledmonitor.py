@@ -55,7 +55,7 @@ WEB_CODE = """
 <body>
 <h1><p>Press the Button Below to Light Jordan's Light!</p></h1>
 <form action="/page" method="get">
-  <button class="button button1" type="submit" formaction="/page">PAGE PACKER</button>
+  <button class="button button1" type="submit" formaction="/page">PAGE HACKER</button>
 </form>
 
 </body>
@@ -121,7 +121,7 @@ class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
         """This is the default method which gets called on GET"""
         global paging_hacker
-        if self.path == "/":
+        if self.path == "/" or self.path == "?":
             self.send_response(200)
             self.send_header("Content-type", "text/html")
             self.end_headers()
