@@ -13,6 +13,11 @@ from time import sleep
 from datetime import datetime
 from pythonping import ping
 from ledcontrol import led_color, led_color_blink
+from http.server import BaseHTTPRequestHandler, HTTPServer
+import time
+
+hostName = "localhost"
+serverPort = 8080
 
 addresses = {
     "8.8.8.8": 		"green",    # Google
@@ -27,6 +32,18 @@ addresses = {
 logging.basicConfig(filename='/tmp/ledmonitor.log', level=logging.DEBUG)
 
 
+class MyServer(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/html")
+        self.end_headers()
+        self.wfile.write(bytes("<html><head><title>https://pythonbasics.org</title></head>", "utf-8"))
+        self.wfile.write(bytes("<p>Request: %s</p>" % self.path, "utf-8"))
+        self.wfile.write(bytes("<body>", "utf-8"))
+        self.wfile.write(bytes("<p>This is an example web server.</p>", "utf-8"))
+        self.wfile.write(bytes("</body></html>", "utf-8"))
+        led_color_blink("orange", 10, 0.1)
+
 def eep(msg, warn=True):
     """Scream about some important problem"""
     today = datetime.now()
@@ -37,6 +54,16 @@ def eep(msg, warn=True):
     else:
         logging.error(log_str)
 
+if __name__ == "__main__":        
+    webServer = ThreadingHTTPServer((hostName, serverPort), MyServer)
+    print("Server started http://%s:%s" % (hostName, serverPort))
+    try:
+        webServer.serve_forever()
+    except KeyboardInterrupt:
+        pass
+
+    webServer.server_close()
+    print("Server stopped.")
 
 while True:
     FAIL_CNT = 0
