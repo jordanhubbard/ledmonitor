@@ -70,7 +70,7 @@ webCodePaged = """
 <title>PAGING</title>
 </head>
 <body>
-<h3><p>You have paged the hacker!</p></h1>
+<h2><p>You have paged the hacker! He will check his texts.</p></h2>
 </body>
 </html>
 """
@@ -96,12 +96,11 @@ class MyServer(BaseHTTPRequestHandler):
            self.end_headers()
            self.wfile.write(bytes(webCode, "utf-8"))
         elif self.path == "/page?":
-           pagingHacker=True
+           pagingHacker = True
            self.send_response(200)
            self.send_header("Content-type", "text/html")
            self.end_headers()
            self.wfile.write(bytes(webCodePaged, "utf-8"))
-           pageHacker = True
 
 def eep(msg, warn=True):
     """Scream about some important problem"""
