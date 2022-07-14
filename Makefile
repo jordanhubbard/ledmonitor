@@ -7,7 +7,6 @@ install:
 	sudo install -d ${INSTALL_PATH}
 	sudo install -m 755 ledmonitor.py ${INSTALL_PATH}
 	sudo install -m 755 ledcontrol.py ${INSTALL_PATH}
-	sudo pip install --no-input pythonping
 	sudo install -m 755 -c ledmonitor.service /etc/systemd/system
 
 test:
