@@ -9,15 +9,71 @@ status LED wired to some GPIO pins.
 import sys
 import os
 import logging
+import threading
+import time
 from time import sleep
 from datetime import datetime
 from pythonping import ping
 from ledcontrol import led_color, led_color_blink
-from http.server import BaseHTTPRequestHandler, HTTPServer
-import time
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 hostName = "netled.local"
 serverPort = 8080
+pagingHacker = False
+
+webCode = """
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+.button {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.button1 {
+  background-color: white;
+  color: black;
+  border: 2px solid #4CAF50;
+}
+
+.button1:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+</style>
+
+<title>Press Button To Page Hacker</title>
+</head>
+<body>
+<h1><p>Press the Button Below to Light Jordan's Light!</p></h1>
+<form action="/page" method="get">
+  <button class="button button1" type="submit" formaction="/page">PAGE PACKER</button>
+</form>
+
+</body>
+</html>
+"""
+
+webCodePaged = """
+<!DOCTYPE html>
+<html>
+<head>
+<title>PAGING</title>
+</head>
+<body>
+<h3><p>You have paged the hacker!</p></h1>
+</body>
+</html>
+"""
 
 addresses = {
     "8.8.8.8": 		"green",    # Google
@@ -34,15 +90,18 @@ logging.basicConfig(filename='/tmp/ledmonitor.log', level=logging.DEBUG)
 
 class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
-        self.send_response(200)
-        self.send_header("Content-type", "text/html")
-        self.end_headers()
-        self.wfile.write(bytes("<html><head><title>https://pythonbasics.org</title></head>", "utf-8"))
-        self.wfile.write(bytes("<p>Request: %s</p>" % self.path, "utf-8"))
-        self.wfile.write(bytes("<body>", "utf-8"))
-        self.wfile.write(bytes("<p>This is an example web server.</p>", "utf-8"))
-        self.wfile.write(bytes("</body></html>", "utf-8"))
-        led_color_blink("orange", 10, 0.1)
+        if self.path == "/":
+           self.send_response(200)
+           self.send_header("Content-type", "text/html")
+           self.end_headers()
+           self.wfile.write(bytes(webCode, "utf-8"))
+        elif self.path == "/page?":
+           pagingHacker=True
+           self.send_response(200)
+           self.send_header("Content-type", "text/html")
+           self.end_headers()
+           self.wfile.write(bytes(webCodePaged, "utf-8"))
+           pageHacker = True
 
 def eep(msg, warn=True):
     """Scream about some important problem"""
@@ -56,17 +115,20 @@ def eep(msg, warn=True):
 
 if __name__ == "__main__":        
     webServer = ThreadingHTTPServer((hostName, serverPort), MyServer)
-    print("Server started http://%s:%s" % (hostName, serverPort))
-    try:
-        webServer.serve_forever()
-    except KeyboardInterrupt:
-        pass
-
-    webServer.server_close()
-    print("Server stopped.")
+    th = threading.Thread(target=webServer.serve_forever)
+    eep("Server started http://%s:%s" % (hostName, serverPort))
+    th.start()
 
 while True:
     FAIL_CNT = 0
+    if pagingHacker:
+        led_color_blink("white", 10, 0.1)
+        sleep(2)
+        led_color_blink("white", 10, 0.1)
+        sleep(2)
+        led_color_blink("white", 10, 0.1)
+        pagingHacker = False
+
     for adr in addresses.items():
         ip = adr[0]
         col = adr[1]
