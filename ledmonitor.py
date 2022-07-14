@@ -96,8 +96,8 @@ WEB_CODEPAGED = """
 </style>
 
 <h2><p>You have paged the hacker! He will check his texts.</p></h2>
-<form action="/" method="get">
-  <button class="button button1" type="submit" formaction="/">RETURN TO PAGER</button>
+<form action="/reload" method="get">
+  <button class="button button1" type="submit" formaction="/reload">RETURN TO PAGER</button>
 </form>
 </body>
 </html>
@@ -121,7 +121,7 @@ class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
         """This is the default method which gets called on GET"""
         global paging_hacker
-        if self.path == "/" or self.path == "?":
+        if self.path in ('/', '/reload?'):
             self.send_response(200)
             self.send_header("Content-type", "text/html")
             self.end_headers()
@@ -146,7 +146,7 @@ def eep(msg, warn=True):
 if __name__ == "__main__":
     webServer = ThreadingHTTPServer((HOST_NAME, SERVER_PORT), MyServer)
     th = threading.Thread(target=webServer.serve_forever)
-    eep("Server started http://%s:%s" % (HOST_NAME, SERVER_PORT))
+    print("Server started http://%s:%s" % (HOST_NAME, SERVER_PORT))
     th.start()
 
 while True:
