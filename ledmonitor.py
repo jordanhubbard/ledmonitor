@@ -69,7 +69,36 @@ WEB_CODEPAGED = """
 <title>PAGING</title>
 </head>
 <body>
+
+<style>
+.button {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.button1 {
+  background-color: white;
+  color: black;
+  border: 2px solid #FFAF50;
+}
+
+.button1:hover {
+  background-color: #FFAF50;
+  color: white;
+}
+</style>
+
 <h2><p>You have paged the hacker! He will check his texts.</p></h2>
+<form action="/" method="get">
+  <button class="button button1" type="submit" formaction="/">RETURN TO PAGER</button>
+</form>
 </body>
 </html>
 """
