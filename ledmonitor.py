@@ -10,18 +10,17 @@ import sys
 import os
 import logging
 import threading
-import time
 from time import sleep
 from datetime import datetime
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pythonping import ping
 from ledcontrol import led_color, led_color_blink
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-hostName = "netled.local"
-serverPort = 8080
-pagingHacker = False
+HOST_NAME = "netled.local"
+SERVER_PORT = 8080
+paging_hacker = False
 
-webCode = """
+WEB_CODE = """
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,7 +62,7 @@ webCode = """
 </html>
 """
 
-webCodePaged = """
+WEB_CODEPAGED = """
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,18 +88,21 @@ logging.basicConfig(filename='/tmp/ledmonitor.log', level=logging.DEBUG)
 
 
 class MyServer(BaseHTTPRequestHandler):
+    """Simple embedded python web server"""
     def do_GET(self):
+        """This is the default method which gets called on GET"""
+        global paging_hacker
         if self.path == "/":
-           self.send_response(200)
-           self.send_header("Content-type", "text/html")
-           self.end_headers()
-           self.wfile.write(bytes(webCode, "utf-8"))
+            self.send_response(200)
+            self.send_header("Content-type", "text/html")
+            self.end_headers()
+            self.wfile.write(bytes(WEB_CODE, "utf-8"))
         elif self.path == "/page?":
-           pagingHacker = True
-           self.send_response(200)
-           self.send_header("Content-type", "text/html")
-           self.end_headers()
-           self.wfile.write(bytes(webCodePaged, "utf-8"))
+            paging_hacker = True
+            self.send_response(200)
+            self.send_header("Content-type", "text/html")
+            self.end_headers()
+            self.wfile.write(bytes(WEB_CODEPAGED, "utf-8"))
 
 def eep(msg, warn=True):
     """Scream about some important problem"""
@@ -112,21 +114,21 @@ def eep(msg, warn=True):
     else:
         logging.error(log_str)
 
-if __name__ == "__main__":        
-    webServer = ThreadingHTTPServer((hostName, serverPort), MyServer)
+if __name__ == "__main__":
+    webServer = ThreadingHTTPServer((HOST_NAME, SERVER_PORT), MyServer)
     th = threading.Thread(target=webServer.serve_forever)
-    eep("Server started http://%s:%s" % (hostName, serverPort))
+    eep("Server started http://%s:%s" % (HOST_NAME, SERVER_PORT))
     th.start()
 
 while True:
     FAIL_CNT = 0
-    if pagingHacker:
+    if paging_hacker:
         led_color_blink("white", 10, 0.1)
         sleep(2)
         led_color_blink("white", 10, 0.1)
         sleep(2)
         led_color_blink("white", 10, 0.1)
-        pagingHacker = False
+        paging_hacker = False
 
     for adr in addresses.items():
         ip = adr[0]
