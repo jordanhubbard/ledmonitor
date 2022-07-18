@@ -17,5 +17,8 @@ run: install
 	sudo systemctl enable ledmonitor
 	sudo systemctl start ledmonitor
 
+stop:
+	sudo systemctl stop ledmonitor
+
 clean:
 	rm -rf .idea build dist ledmonitor.spec
