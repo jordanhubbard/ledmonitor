@@ -187,7 +187,6 @@ while True:
             eep("Attempt to run agent as non-root id " + os.getuid())
             sys.exit(1)
 
-        except OSError:
-            # Usually means the network has violently disconnected
+        except OSError as error:
             led_color_blink("red", 5, 0.2)
-            eep("exception path triggered on " + ip, False)
+            eep("exception path triggered on " + ip + " " + error, False)
