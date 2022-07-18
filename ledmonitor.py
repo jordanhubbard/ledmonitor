@@ -17,7 +17,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pythonping import ping
 from ledcontrol import led_color, led_color_blink
 
-HOST_NAME = socket.gethostname()
+HOST_NAME = "0.0.0.0"
 SERVER_PORT = 8080
 PAGING_HACKER = False
 
@@ -135,13 +135,13 @@ class MyServer(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(bytes(WEB_CODEPAGED, "utf-8"))
 
-def eep(msg, warn=True):
-    """Scream about some important problem"""
+def eep(msg, debug=True):
+    """Emit logging information to the logging data file"""
     today = datetime.now()
     date_str = today.strftime("%Y/%m/%d %R")
     log_str = date_str + " " + msg
-    if warn:
-        logging.warning(log_str)
+    if debug:
+        logging.debug(log_str)
     else:
         logging.error(log_str)
 
