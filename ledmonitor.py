@@ -10,14 +10,15 @@ import sys
 import os
 import logging
 import threading
+import socket
 from time import sleep
 from datetime import datetime
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pythonping import ping
 from ledcontrol import led_color, led_color_blink
 
-HOST_NAME = "netled.local"
-SERVER_PORT = 8080
+HOST_NAME = socket.gethostname()
+SERVER_PORT = 80
 PAGING_HACKER = False
 
 WEB_CODE = """
