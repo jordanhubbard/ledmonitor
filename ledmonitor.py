@@ -122,6 +122,7 @@ class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
         """This is the default method which gets called on GET"""
         global PAGING_HACKER
+        eep(self.path)
         if self.path in ('/', '/reload?'):
             self.send_response(200)
             self.send_header("Content-type", "text/html")
@@ -147,7 +148,7 @@ def eep(msg, warn=True):
 if __name__ == "__main__":
     webServer = ThreadingHTTPServer((HOST_NAME, SERVER_PORT), MyServer)
     th = threading.Thread(target=webServer.serve_forever)
-    print("Server started http://%s:%s" % (HOST_NAME, SERVER_PORT))
+    eep("Server started http://%s:%s" % (HOST_NAME, SERVER_PORT))
     th.start()
 
 while True:
