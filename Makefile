@@ -4,6 +4,7 @@ build:
 	@echo No build step for this module - use install target to install
 
 install:
+	@echo "Target $@ running as root"
 	sudo install -d ${INSTALL_PATH}
 	sudo install -m 755 ledmonitor.py ${INSTALL_PATH}
 	sudo install -m 755 ledcontrol.py ${INSTALL_PATH}
