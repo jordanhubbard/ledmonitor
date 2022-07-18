@@ -10,23 +10,23 @@ install:
 	sudo install -m 755 ledcontrol.py ${INSTALL_PATH}
 	sudo install -m 755 -c ledmonitor.service /etc/systemd/system
 
-test_led:
+test-led:
 	python3 test_tristate_led.py
 
-test_server:
+test-server:
 	@echo "Target $@ running as root"
 	sudo python3 ledmonitor.py
 
 test:
 	@echo "use either the test_led or test_server targets to test each function"
 
-service-run: install
+run-server: install
 	@echo "Target $@ running as root"
 	sudo systemctl daemon-reload
 	sudo systemctl enable ledmonitor
 	sudo systemctl start ledmonitor
 
-service-stop:
+stop-server:
 	@echo "Target $@ running as root"
 	sudo systemctl stop ledmonitor
 
