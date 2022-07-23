@@ -31,7 +31,7 @@ stop-server:
 	sudo systemctl stop ledmonitor
 
 flake:
-	flake8 *.py
+	@flake8
 
 clean:
 	rm -rf .idea build dist ledmonitor.spec

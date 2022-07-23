@@ -62,19 +62,19 @@ def led_blue(value):
 
 
 def led_cyan(value):
-    """Power on/off LED color of cyan, using a combination of blue and green"""
+    """Power on/off LED color cyan, using a combination of blue and green"""
     led_blue(value)
     led_green(value)
 
 
 def led_yellow(value):
-    """Power on/off LED color of yellow, using a combination of red and green"""
+    """Power on/off LED color yellow, using a combination of red and green"""
     led_red(value)
     led_green(value)
 
 
 def led_violet(value):
-    """Power on/off LED color of violet, using a combination of red and blue"""
+    """Power on/off LED color violet, using a combination of red and blue"""
     led_red(value)
     led_blue(value)
 

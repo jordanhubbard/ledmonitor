@@ -149,6 +149,7 @@ def eep(msg, debug=True):
     else:
         logging.error(log_str)
 
+
 if __name__ == "__main__":
     webServer = ThreadingHTTPServer((HOST_NAME, SERVER_PORT), MyServer)
     th = threading.Thread(target=webServer.serve_forever)
