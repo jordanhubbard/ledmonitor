@@ -10,7 +10,6 @@ import sys
 import os
 import logging
 import threading
-import socket
 from time import sleep
 from datetime import datetime
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -19,7 +18,7 @@ from ledcontrol import led_color, led_color_blink
 
 HOST_NAME = "0.0.0.0"
 SERVER_PORT = 8080
-PAGING_HACKER = False
+PagingHacker = False
 
 WEB_CODE = """
 <!DOCTYPE html>
@@ -121,7 +120,7 @@ class MyServer(BaseHTTPRequestHandler):
     """Simple embedded python web server"""
     def do_GET(self):
         """This is the default method which gets called on GET"""
-        global PAGING_HACKER
+        global PagingHacker
         eep(self.path)
         if self.path in ('/', '/reload?'):
             self.send_response(200)
@@ -129,7 +128,7 @@ class MyServer(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(bytes(WEB_CODE, "utf-8"))
         elif self.path == "/page?":
-            PAGING_HACKER = True
+            PagingHacker = True
             self.send_response(200)
             self.send_header("Content-type", "text/html")
             self.end_headers()
@@ -153,13 +152,13 @@ if __name__ == "__main__":
 
 while True:
     FAIL_CNT = 0
-    if PAGING_HACKER:
+    if PagingHacker:
         led_color_blink("white", 10, 0.1)
         sleep(2)
         led_color_blink("white", 10, 0.1)
         sleep(2)
         led_color_blink("white", 10, 0.1)
-        PAGING_HACKER = False
+        PagingHacker = False
 
     for adr in addresses.items():
         ip = adr[0]
