@@ -55,7 +55,9 @@ WEB_CODE = """
 <body>
 <h1><p>Press the Button Below to Light Jordan's Light!</p></h1>
 <form action="/page" method="get">
-  <button class="button button1" type="submit" formaction="/page">PAGE HACKER</button>
+<button class="button button1" type="submit" formaction="/page">
+PAGE HACKER
+</button>
 </form>
 
 </body>
@@ -97,7 +99,9 @@ WEB_CODEPAGED = """
 
 <h2><p>You have paged the hacker! He will check his texts.</p></h2>
 <form action="/reload" method="get">
-  <button class="button button1" type="submit" formaction="/reload">RETURN TO PAGER</button>
+<button class="button button1" type="submit" formaction="/reload">
+RETURN TO PAGER
+</button>
 </form>
 </body>
 </html>
@@ -133,6 +137,7 @@ class MyServer(BaseHTTPRequestHandler):
             self.send_header("Content-type", "text/html")
             self.end_headers()
             self.wfile.write(bytes(WEB_CODEPAGED, "utf-8"))
+
 
 def eep(msg, debug=True):
     """Emit logging information to the logging data file"""

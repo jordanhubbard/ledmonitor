@@ -30,5 +30,8 @@ stop-server:
 	@echo "Target $@ running as root"
 	sudo systemctl stop ledmonitor
 
+flake:
+	flake8 *.py
+
 clean:
 	rm -rf .idea build dist ledmonitor.spec
