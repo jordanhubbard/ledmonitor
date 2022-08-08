@@ -150,48 +150,49 @@ def eep(msg, debug=True):
         logging.error(log_str)
 
 
+# If running as the primary program, do the following things...
 if __name__ == "__main__":
     webServer = ThreadingHTTPServer((HOST_NAME, SERVER_PORT), MyServer)
     th = threading.Thread(target=webServer.serve_forever)
     eep("Server started http://%s:%s" % (HOST_NAME, SERVER_PORT))
     th.start()
 
-while True:
-    FAIL_CNT = 0
-    if PagingHacker:
-        led_color_blink("white", 10, 0.1)
-        sleep(2)
-        led_color_blink("white", 10, 0.1)
-        sleep(2)
-        led_color_blink("white", 10, 0.1)
-        PagingHacker = False
+    while True:
+        FAIL_CNT = 0
+        if PagingHacker:
+            led_color_blink("white", 10, 0.1)
+            sleep(2)
+            led_color_blink("white", 10, 0.1)
+            sleep(2)
+            led_color_blink("white", 10, 0.1)
+            PagingHacker = False
 
-    for adr in addresses.items():
-        ip = adr[0]
-        col = adr[1]
-        try:
-            x = ping(ip, count=1, size=992)
-            if x.success():
-                led_color(col, True)
-                sleep(5)
-                break
+            for adr in addresses.items():
+                ip = adr[0]
+                col = adr[1]
+                try:
+                    x = ping(ip, count=1, size=992)
+                    if x.success():
+                        led_color(col, True)
+                        sleep(5)
+                        break
 
-            FAIL_CNT = FAIL_CNT + 1
-            if FAIL_CNT > 3:
-                led_color("red", True)
-                eep("fail count > 3 for ip " + ip)
-                sleep(2)
-                FAIL_CNT = 0
-            else:
-                # Let's have a blink spasm
-                led_color_blink(col, 5, 0.2)
-                eep("spazzing on ip " + ip + " with color " + col)
+                    FAIL_CNT = FAIL_CNT + 1
+                    if FAIL_CNT > 3:
+                        led_color("red", True)
+                        eep("fail count > 3 for ip " + ip)
+                        sleep(2)
+                        FAIL_CNT = 0
+                    else:
+                        # Let's have a blink spasm
+                        led_color_blink(col, 5, 0.2)
+                        eep("spazzing on ip " + ip + " with color " + col)
 
-        except PermissionError:
-            print("You have to run this as root")
-            eep("Attempt to run agent as non-root id " + os.getuid())
-            sys.exit(1)
+                except PermissionError:
+                    print("You have to run this as root")
+                    eep("Attempt to run agent as non-root id " + os.getuid())
+                    sys.exit(1)
 
-        except OSError as error:
-            led_color_blink("red", 5, 0.2)
-            eep("exception path triggered on " + ip + " " + error, False)
+                except OSError as error:
+                    led_color_blink("red", 5, 0.2)
+                    eep("OSError triggered on " + ip + " " + error, False)

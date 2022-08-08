@@ -13,13 +13,13 @@ _blue_led = LED(22)
 
 def _led_functions():
     return {
-      "red":	led_red,
-      "green":	led_green,
-      "blue":	led_blue,
-      "cyan":	led_cyan,
-      "yellow":	led_yellow,
-      "violet":	led_violet,
-      "white":	led_all,
+        "red":		led_red,
+        "green":	led_green,
+        "blue":		led_blue,
+        "cyan":		led_cyan,
+        "yellow":	led_yellow,
+        "violet":	led_violet,
+        "white":	led_all,
     }
 
 
