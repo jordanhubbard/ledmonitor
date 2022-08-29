@@ -20,18 +20,20 @@ test-server:
 test:
 	@echo "use either the test_led or test_server targets to test each function"
 
-run-server: install
+run-server: install reload
 	@echo "Target $@ running as root"
-	sudo systemctl daemon-reload
 	sudo systemctl enable ledmonitor
 	sudo systemctl start ledmonitor
 
-stop-server:
+stop-server: reload
 	@echo "Target $@ running as root"
 	sudo systemctl stop ledmonitor
 
 flake:
 	@flake8
+
+reload:
+	sudo systemctl daemon-reload
 
 clean:
 	rm -rf .idea build dist ledmonitor.spec
