@@ -3,13 +3,15 @@
 from time import sleep
 from gpiozero import LED
 
-# tri-color LED is hooked to GPIO pins 17, 27 and 22.  These need to be
+# tri-color LED is hooked to GPIO pins 9, 10 and 11.  These need to be
 # statically allocated at this level rather than looking them up in a table
 # due to the way GPIO allocates pins *once*.
-_red_led = LED(17)
-_green_led = LED(27)
-_blue_led = LED(22)
+BLUE_LED = LED(11)
+RED_LED = LED(10)
+GREEN_LED = LED(9)
 
+# If common anode LED, then True else set to False
+COMMON_ANODE = True
 
 def _led_functions():
     return {
@@ -27,21 +29,23 @@ def _led_functions():
 # but I don't feel like doing that and I already have more primary/secondary
 # colors than I need!
 def _led_color(color, value):
+    if COMMON_ANODE == True:
+        value = not value
     if color == "red":
         if value:
-            _red_led.on()
+            RED_LED.on()
         else:
-            _red_led.off()
+            RED_LED.off()
     elif color == "green":
         if value:
-            _green_led.on()
+            GREEN_LED.on()
         else:
-            _green_led.off()
+            GREEN_LED.off()
     elif color == "blue":
         if value:
-            _blue_led.on()
+            BLUE_LED.on()
         else:
-            _blue_led.off()
+            BLUE_LED.off()
     else:
         raise ValueError("Invalid color name" + color)
 

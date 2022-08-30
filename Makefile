@@ -36,4 +36,4 @@ reload:
 	sudo systemctl daemon-reload
 
 clean:
-	rm -rf .idea build dist ledmonitor.spec
+	rm -rf .idea build dist ledmonitor.spec __pycache__
