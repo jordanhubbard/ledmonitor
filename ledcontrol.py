@@ -13,6 +13,7 @@ GREEN_LED = LED(9)
 # If common anode LED, then True else set to False
 COMMON_ANODE = True
 
+
 def _led_functions():
     return {
         "red":		led_red,
@@ -29,7 +30,7 @@ def _led_functions():
 # but I don't feel like doing that and I already have more primary/secondary
 # colors than I need!
 def _led_color(color, value):
-    if COMMON_ANODE == True:
+    if COMMON_ANODE:
         value = not value
     if color == "red":
         if value:

@@ -8,24 +8,26 @@ from gpiozero import LED
 MAX_LED = 27
 COMMON_ANODE = True
 
+
 def test_pins(sleep_interval):
     """Run through all GPIO pins and turn each on and off"""
     i = 0
     while True:
-        l = LED(i)
+        led = LED(i)
         print(str(i) + " on")
-        if COMMON_ANODE == True:
-            l.off()
+        if COMMON_ANODE:
+            led.off()
         else:
-            l.on()
+            led.on()
         sleep(sleep_interval)
         print(str(i) + " off")
-        if COMMON_ANODE == True:
-            l.on()
+        if COMMON_ANODE:
+            led.on()
         else:
-            l.off()
+            led.off()
         i = i + 1
         if i > MAX_LED:
             i = 0
+
 
 test_pins(0.5)
