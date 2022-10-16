@@ -18,7 +18,7 @@ test-server:
 	sudo python3 ledmonitor.py
 
 test:
-	@echo "use either the test_led or test_server targets to test each function"
+	@echo "use either the test-led or test-server targets to test each function"
 
 run-server: install reload
 	@echo "Target $@ running as root"
