@@ -165,6 +165,8 @@ if __name__ == "__main__":
             led_color_blink("white", 10, 0.1)
             sleep(2)
             led_color_blink("white", 10, 0.1)
+	    sleep(2)
+            led_color_blink("violet", 10, 0.1)
             PagingHacker = False
 
             for adr in addresses.items():
@@ -183,10 +185,12 @@ if __name__ == "__main__":
                         eep("fail count > 3 for ip " + ip)
                         sleep(2)
                         FAIL_CNT = 0
+                        break
                     else:
                         # Let's have a blink spasm
                         led_color_blink(col, 5, 0.2)
                         eep("spazzing on ip " + ip + " with color " + col)
+                        break
 
                 except PermissionError:
                     print("You have to run this as root")
